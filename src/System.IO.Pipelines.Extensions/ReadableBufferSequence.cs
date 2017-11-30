@@ -30,7 +30,7 @@ namespace System.IO.Pipelines
                     }
                     else
                     {
-                        position.SetItem(_buffer.Start.Segment.Next);
+                        position.SetItem(_buffer.Start.GetSegment());
                     }
                 }
                 return true;
@@ -48,11 +48,11 @@ namespace System.IO.Pipelines
             }
             if (currentSegment == _buffer.End.Segment)
             {
-                item = currentSegment.Buffer.Slice(currentSegment.Start, _buffer.End.Index - currentSegment.Start);
+                item = currentSegment.Memory.Slice(currentSegment.Start, _buffer.End.Index - currentSegment.Start);
             }
             else
             {
-                item = currentSegment.Buffer.Slice(currentSegment.Start, currentSegment.End - currentSegment.Start);
+                item = currentSegment.Memory.Slice(currentSegment.Start, currentSegment.End - currentSegment.Start);
             }
             return true;
         }
